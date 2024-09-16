@@ -12,7 +12,7 @@ export interface ProductType {
     name: string,
     gender: string,
     new: boolean,
-    sale: boolean,
+    sale: boolean | number,
     rate: number,
     price: number,
     originPrice: number,
@@ -26,5 +26,5 @@ export interface ProductType {
     images: Array<string>,
     description: string,
     action: string,
-    slug: string
+    slug: string,
 }

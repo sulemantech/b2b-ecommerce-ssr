@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import TopNavOne from '@/components/Header/TopNav/TopNavOne'
-import MenuOne from '@/components/Header/Menu/MenuOne'
-import Breadcrumb from '@/components/Breadcrumb/Breadcrumb'
+// import MenuOne from '@/components/Header/Menu/MenuOne'
+// import Breadcrumb from '@/components/Breadcrumb/Breadcrumb'
 import Footer from '@/components/Footer/Footer'
 import { ProductType } from '@/type/ProductType'
 import productData from '@/data/Product.json'
@@ -14,6 +14,7 @@ import { useCompare } from '@/context/CompareContext'
 import { useCart } from '@/context/CartContext'
 import { useModalCartContext } from '@/context/ModalCartContext'
 import Rate from '@/components/Other/Rate'
+import { APIHost } from '@/api/api'
 
 const Compare = () => {
     const { compareState } = useCompare();
@@ -34,8 +35,8 @@ const Compare = () => {
         <>
             <TopNavOne props="style-one bg-black" slogan="New customers save 10% with the code GET10" />
             <div id="header" className='relative w-full'>
-                <MenuOne props="bg-transparent" />
-                <Breadcrumb heading='Compare Products' subHeading='Compare Products' />
+                {/* <MenuOne props="bg-transparent" />
+                <Breadcrumb heading='Compare Products' subHeading='Compare Products' /> */}
             </div>
             <div className="compare-block md:py-20 py-10">
                 <div className="container">
@@ -48,7 +49,7 @@ const Compare = () => {
                                         <div className="product-item px-10 pt-6 pb-5 border-r border-line" key={item.id}>
                                             <div className="bg-img w-full aspect-[3/4] rounded-lg overflow-hidden flex-shrink-0">
                                                 <Image
-                                                    src={item.images[0]}
+                                                    src={APIHost+item.images[0]}
                                                     width={1000}
                                                     height={1500}
                                                     alt={item.images[0]}

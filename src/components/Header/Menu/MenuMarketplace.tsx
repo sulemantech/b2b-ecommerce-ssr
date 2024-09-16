@@ -14,6 +14,7 @@ import useMenuMobile from '@/store/useMenuMobile';
 import { useModalCartContext } from '@/context/ModalCartContext';
 import { useModalWishlistContext } from '@/context/ModalWishlistContext';
 import { useCart } from '@/context/CartContext';
+import { fetchCategories } from '@/api/api'
 
 const MenuMarketplace = () => {
     const pathname = usePathname()
@@ -24,6 +25,8 @@ const MenuMarketplace = () => {
     const { openModalCart } = useModalCartContext()
     const { cartState } = useCart()
     const { openModalWishlist } = useModalWishlistContext()
+    const [categories, setCategories] = useState<any[]>([]);
+    const [openSubMenuDepartment2, setOpenSubMenuDepartment2] = useState(false);
 
     const [searchKeyword, setSearchKeyword] = useState('');
     const router = useRouter()
@@ -45,6 +48,46 @@ const MenuMarketplace = () => {
         router.push(`/shop/breadcrumb1?type=${type}`);
     };
 
+    useEffect(() => {
+        const getCategories = async () => {
+          try {
+            const data = await fetchCategories();
+            setCategories(data);
+          } catch (error) {
+            console.error('Failed to fetch categories', error);
+          }
+        };
+        getCategories();
+      }, []);
+    
+      const handleSubMenuDepartment2 = () => {
+        setOpenSubMenuDepartment2(!openSubMenuDepartment);
+      };
+    
+      // Function to map category name to an icon
+      const getCategoryIcon = (categoryName: string) => {
+        switch (categoryName.toLowerCase()) {
+          case 'electronics':
+            return <Icon.Circuitry className="text-xl" />;
+          case 'smart phones':
+            return <Icon.DeviceMobile className="text-xl" />;
+          case 'laptops':
+            return <Icon.Laptop className="text-xl" />;
+          case 'home & lifestyle':
+            return <Icon.TreePalm className="text-xl" />;
+          case 'fashion':
+            return <Icon.PersonArmsSpread className="text-xl" />;
+          case 'headphones':
+            return <Icon.Headphones className="text-xl" />;
+          case 'kitchen':
+            return <Icon.CookingPot className="text-xl" />;
+          case 'homeaccessories':
+            return <Icon.House className="text-xl" />;
+          default:
+            return <Icon.List className="text-xl" />; // Default icon
+        }
+      };
+
     return (
         <>
             <div className={`header-menu bg-white w-full top-0 z-10 duration-500`}>
@@ -55,7 +98,7 @@ const MenuMarketplace = () => {
                                 <Icon.List className="text-white text-2xl" />
                             </div>
                             <Link href={'/'} className='flex items-center'>
-                                <div className="heading4 text-white">Anvogue</div>
+                                <div className="heading4 text-white">MetaMart</div>
                             </Link>
                             <div className="form-search w-2/3 pl-8 flex items-center h-[44px] max-lg:hidden">
                                 <div className='w-full flex items-center h-full'>
@@ -114,234 +157,44 @@ const MenuMarketplace = () => {
                                         onClick={handleSubMenuDepartment}
                                     >
                                         <div className="flex items-center gap-3">
-                                            <Icon.List className='text-xl max-sm:text-base' />
-                                            <div className="text-button whitespace-nowrap">Department</div>
+                                            <Icon.List className="text-xl max-sm:text-base" />
+                                            <div className="text-button whitespace-nowrap">Categories</div>
                                         </div>
-                                        <Icon.CaretDown className='text-xl max-sm:text-base' />
+                                        <Icon.CaretDown className="text-xl max-sm:text-base" />
                                     </div>
                                     <div
-                                        className={`sub-menu-department style-marketplace absolute top-[84px] left-0 right-0 px-[26px] py-[5px] bg-surface rounded-xl border border-line ${openSubMenuDepartment ? 'open' : ''}`}
+                                        className={`sub-menu-department style-marketplace absolute top-[84px] left-0 right-0 px-[26px] py-[5px] bg-surface rounded-xl border border-line ${openSubMenuDepartment ? 'open' : ''
+                                            }`}
                                     >
-                                        <Link href='/shop/breadcrumb-img'
-                                            className="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between">
-                                            <span className="flex items-center gap-2">
-                                                <Icon.DesktopTower className="text-xl" />
-                                                <span className='name'>Clothing</span>
-                                            </span>
-                                            <Icon.CaretRight />
-                                        </Link>
-                                        <Link href='/shop/breadcrumb-img'
-                                            className="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between">
-                                            <span className="flex items-center gap-2">
-                                                <Icon.DeviceTabletCamera className="text-xl" />
-                                                <span className='name'>Tablet & iPad </span>
-                                            </span>
-                                            <Icon.CaretRight />
-                                        </Link>
-                                        <Link href='/shop/breadcrumb-img'
-                                            className="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between">
-                                            <span className="flex items-center gap-2">
-                                                <Icon.Printer className="text-xl" />
-                                                <span className='name'>Printer & Cameras</span>
-                                            </span>
-                                            <Icon.CaretRight />
-                                        </Link>
-                                        <Link href='/shop/breadcrumb-img'
-                                            className="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between">
-                                            <span className="flex items-center gap-2">
-                                                <Icon.DeviceMobileSpeaker className="text-xl" />
-                                                <span className='name'>Smart Phones</span>
-                                            </span>
-                                            <Icon.CaretRight />
-                                        </Link>
-                                        <Link href='/shop/breadcrumb-img'
-                                            className="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between">
-                                            <span className="flex items-center gap-2">
-                                                <Icon.Keyboard className="text-xl" />
-                                                <span className='name'>Keyboard & Mouse</span>
-                                            </span>
-                                            <Icon.CaretRight />
-                                        </Link>
-                                        <Link href='/shop/breadcrumb-img'
-                                            className="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between">
-                                            <span className="flex items-center gap-2">
-                                                <Icon.GameController className="text-xl" />
-                                                <span className='name'>Video Games</span>
-                                            </span>
-                                            <Icon.CaretRight />
-                                        </Link>
-                                        <Link href='/shop/breadcrumb-img'
-                                            className="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between">
-                                            <span className="flex items-center gap-2">
-                                                <Icon.PersonArmsSpread className="text-xl" />
-                                                <span className='name'>Sport & Outdoor</span>
-                                            </span>
-                                            <Icon.CaretRight />
-                                        </Link>
-                                        <Link href='/shop/breadcrumb-img'
-                                            className="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between">
-                                            <span className="flex items-center gap-2">
-                                                <Icon.Watch className="text-xl" />
-                                                <span className='name'>Smart Watch</span>
-                                            </span>
-                                            <Icon.CaretRight />
-                                        </Link>
-                                        <Link href='/shop/breadcrumb-img'
-                                            className="item py-3 whitespace-nowrap w-full flex items-center justify-between">
-                                            <span className="flex items-center gap-2">
-                                                <Icon.Headphones className="text-xl" />
-                                                <span className='name'>Headphone</span>
-                                            </span>
-                                            <Icon.CaretRight />
-                                        </Link>
+                                        {categories.length > 0 ? (
+                                            categories.map((category) => (
+                                                <Link
+                                                    href={`/shop/category/${category.id}`}
+                                                    key={category.id}
+                                                    className="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between"
+                                                >
+                                                    <span className="flex items-center gap-2">
+                                                        {getCategoryIcon(category.name)}
+                                                        <span className="name">{category.name}</span>
+                                                    </span>
+                                                    <Icon.CaretRight />
+                                                </Link>
+                                            ))
+                                        ) : (
+                                            <p>Loading categories...</p>
+                                        )}
                                     </div>
                                 </div>
+
                                 <div className="menu-main style-eight h-full pl-12 max-lg:hidden">
                                     <ul className='flex items-center gap-8 h-full'>
                                         <li className='h-full relative'>
                                             <Link
-                                                href="#!"
-                                                className={`text-button-uppercase duration-300 h-full flex items-center justify-center gap-1 
-                                                ${pathname.includes('/homepages/') ? 'active' : ''}`}
+                                                href="/"
+                                                className={`text-button-uppercase duration-300 h-full flex items-center justify-center gap-1`}
                                             >
-                                                Demo
+                                                Home
                                             </Link>
-                                            <div className="sub-menu absolute py-3 px-5 -left-10 w-max grid grid-cols-4 gap-5 bg-white rounded-b-xl">
-                                                <ul>
-                                                    <li>
-                                                        <Link href="/" className='text-secondary duration-300'>
-                                                            Home Fashion 1
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link
-                                                            href="/homepages/fashion2"
-                                                            className={`text-secondary duration-300 ${pathname === '/homepages/fashion2' ? 'active' : ''}`}
-                                                        >
-                                                            Home Fashion 2
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link
-                                                            href="/homepages/fashion3"
-                                                            className={`text-secondary duration-300 ${pathname === '/homepages/fashion3' ? 'active' : ''}`}
-                                                        >
-                                                            Home Fashion 3
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/fashion4" className='text-secondary duration-300'>
-                                                            Home Fashion 4
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/fashion5" className='text-secondary duration-300'>
-                                                            Home Fashion 5
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/fashion6" className='text-secondary duration-300'>
-                                                            Home Fashion 6
-                                                        </Link>
-                                                    </li>
-                                                </ul>
-                                                <ul>
-                                                    <li>
-                                                        <Link
-                                                            href="/homepages/fashion7"
-                                                            className={`text-secondary duration-300 ${pathname === '/homepages/fashion7' ? 'active' : ''}`}
-                                                        >
-                                                            Home Fashion 7
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/fashion8" className={`text-secondary duration-300 ${pathname === '/homepages/fashion8' ? 'active' : ''}`}>
-                                                            Home Fashion 8
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/fashion9" className={`text-secondary duration-300 ${pathname === '/homepages/fashion9' ? 'active' : ''}`}>
-                                                            Home Fashion 9
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/fashion10" className={`text-secondary duration-300 ${pathname === '/homepages/fashion10' ? 'active' : ''}`}>
-                                                            Home Fashion 10
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/fashion11" className={`text-secondary duration-300 ${pathname === '/homepages/fashion11' ? 'active' : ''}`}>
-                                                            Home Fashion 11
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/underwear" className='text-secondary duration-300'>
-                                                            Home Underwear
-                                                        </Link>
-                                                    </li>
-                                                </ul>
-                                                <ul>
-                                                    <li>
-                                                        <Link href="/homepages/cosmetic1" className='text-secondary duration-300'>
-                                                            Home Cosmetic 1
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/cosmetic2" className='text-secondary duration-300'>
-                                                            Home Cosmetic 2
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/cosmetic3" className={`text-secondary duration-300 ${pathname === '/homepages/cosmetic3' ? 'active' : ''}`}>
-                                                            Home Cosmetic 3
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/pet" className='text-secondary duration-300'>
-                                                            Home Pet Store
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/jewelry" className='text-secondary duration-300'>
-                                                            Home Jewelry
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/furniture" className='text-secondary duration-300'>
-                                                            Home Furniture
-                                                        </Link>
-                                                    </li>
-                                                </ul>
-                                                <ul>
-                                                    <li>
-                                                        <Link href="/homepages/watch" className='text-secondary duration-300'>
-                                                            Home Watch
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/toys" className='text-secondary duration-300'>
-                                                            Home Toys Kid
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link
-                                                            href="/homepages/yoga"
-                                                            className={`text-secondary duration-300 ${pathname === '/homepages/yoga' ? 'active' : ''}`}>
-                                                            Home Yoga
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/organic" className={`text-secondary duration-300 ${pathname === '/homepages/organic' ? 'active' : ''}`}>
-                                                            Home Organic
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/marketplace" className={`text-secondary duration-300 ${pathname === '/homepages/marketplace' ? 'active' : ''}`}>
-                                                            Home Marketplace
-                                                        </Link>
-                                                    </li>
-                                                </ul>
-                                            </div>
                                         </li>
                                         <li className='h-full'>
                                             <Link href="#!" className='text-button-uppercase duration-300 h-full flex items-center justify-center'>

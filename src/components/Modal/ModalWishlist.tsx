@@ -6,6 +6,7 @@ import Image from 'next/image'
 import * as Icon from "@phosphor-icons/react/dist/ssr";
 import { useModalWishlistContext } from '@/context/ModalWishlistContext'
 import { useWishlist } from '@/context/WishlistContext'
+import { APIHost } from '@/api/api';
 
 const ModalWishlist = () => {
     const { isModalOpen, closeModalWishlist } = useModalWishlistContext();
@@ -33,7 +34,7 @@ const ModalWishlist = () => {
                                 <div className="infor flex items-center gap-5">
                                     <div className="bg-img">
                                         <Image
-                                            src={product.images[0]}
+                                            src={APIHost+product.images[0]}
                                             width={300}
                                             height={300}
                                             alt={product.name}

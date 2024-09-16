@@ -10,11 +10,13 @@ import { useModalCartContext } from '@/context/ModalCartContext'
 import { useWishlist } from '@/context/WishlistContext'
 import { useModalWishlistContext } from '@/context/ModalWishlistContext'
 import { useCompare } from '@/context/CompareContext'
+import product from "@/data/Product.json"
 import { useModalCompareContext } from '@/context/ModalCompareContext'
 import { useModalQuickviewContext } from '@/context/ModalQuickviewContext'
 import { useRouter } from 'next/navigation'
 import Marquee from 'react-fast-marquee'
 import Rate from '../Other/Rate'
+import { APIHost } from '@/api/api'
 
 interface ProductProps {
     data: ProductType
@@ -530,7 +532,8 @@ const Product: React.FC<ProductProps> = ({ data, type }) => {
             {type === 'marketplace' ? (
                 <div className="product-item style-marketplace p-4 border border-line rounded-2xl" onClick={() => handleDetailProduct(data.id)}>
                     <div className="bg-img relative w-full">
-                        <Image className='w-full aspect-square' width={5000} height={5000} src={data.thumbImage[0]} alt="img" />
+                        <Image className='w-full aspect-square'  width={5000} height={5000} src={Array.isArray(data.images) && data.images.length > 0 ? APIHost+data.images[0] : null || '/images/product/1000x1000.png' }
+                            alt="img" />
                         <div className="list-action flex flex-col gap-1 absolute top-0 right-0">
                             <span
                                 className={`add-wishlist-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300 ${wishlistState.wishlistArray.some(item => item.id === data.id) ? 'active' : ''}`}

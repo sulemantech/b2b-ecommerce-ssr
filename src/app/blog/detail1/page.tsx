@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import TopNavOne from '@/components/Header/TopNav/TopNavOne'
-import MenuOne from '@/components/Header/Menu/MenuOne'
+// import MenuOne from '@/components/Header/Menu/MenuOne'
 import blogData from '@/data/Blog.json'
 import NewsInsight from '@/components/Home3/NewsInsight';
 import Footer from '@/components/Footer/Footer'
@@ -35,7 +35,7 @@ const BlogDetailOne = () => {
         <>
             <TopNavOne props="style-one bg-black" slogan="New customers save 10% with the code GET10" />
             <div id="header" className='relative w-full'>
-                <MenuOne props="bg-white" />
+                {/* <MenuOne props="bg-white" /> */}
             </div>
             <div className='blog detail1'>
                 <div className="bg-img md:mt-[74px] mt-14">

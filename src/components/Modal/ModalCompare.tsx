@@ -6,6 +6,7 @@ import Image from 'next/image'
 import * as Icon from "@phosphor-icons/react/dist/ssr";
 import { useModalCompareContext } from '@/context/ModalCompareContext'
 import { useCompare } from '@/context/CompareContext'
+import { APIHost } from '@/api/api';
 
 const ModalCompare = () => {
     const { isModalOpen, closeModalCompare } = useModalCompareContext();
@@ -33,7 +34,7 @@ const ModalCompare = () => {
                                         <div className="infor flex items-center gap-4">
                                             <div className="bg-img w-[100px] h-[100px] flex-shrink-0 rounded-lg overflow-hidden">
                                                 <Image
-                                                    src={product.images[0]}
+                                                    src={APIHost+product.images[0]}
                                                     width={500}
                                                     height={500}
                                                     alt={product.name}

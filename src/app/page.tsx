@@ -1,38 +1,59 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react'
 import TopNavOne from '@/components/Header/TopNav/TopNavOne'
-import MenuOne from '@/components/Header/Menu/MenuOne'
-import SliderOne from '@/components/Slider/SliderOne'
-import WhatNewOne from '@/components/Home1/WhatNewOne'
+import MenuMarketplace from '@/components/Header/Menu/MenuMarketplace'
+import SliderMarketplace from '@/components/Slider/SliderMarketplace'
+import BannerAbove from '@/components/Marketplace/BannerAbove'
 import productData from '@/data/Product.json'
-import Collection from '@/components/Home1/Collection'
-import TabFeatures from '@/components/Home1/TabFeatures'
-import Banner from '@/components/Home1/Banner'
 import Benefit from '@/components/Home1/Benefit'
-import testimonialData from '@/data/Testimonial.json'
-import Testimonial from '@/components/Home1/Testimonial'
-import Instagram from '@/components/Home1/Instagram'
+import blogData from '@/data/Blog.json'
 import Brand from '@/components/Home1/Brand'
 import Footer from '@/components/Footer/Footer'
 import ModalNewsletter from '@/components/Modal/ModalNewsletter'
+import Deal from '@/components/Marketplace/Deal'
+import Collection from '@/components/Marketplace/Collection'
+import BestSeller from '@/components/Marketplace/BestSeller'
+import BannerBelow from '@/components/Marketplace/BannerBelow'
+import TopProduct from '@/components/Marketplace/TopProduct'
+import Recommend from '@/components/Marketplace/Recommend'
+import NewsInsight from '@/components/Home3/NewsInsight'
+import { ProductType } from '@/type/ProductType'
+import { fetchProducts } from '@/api/api'
+import { useState } from 'react'
 
-export default function Home() {
-  return (
-    <>
-      <TopNavOne props="style-one bg-black" slogan="New customers save 10% with the code GET10" />
-      <div id="header" className='relative w-full'>
-        <MenuOne props="bg-transparent" />
-        <SliderOne />
-      </div>
-      <WhatNewOne data={productData} start={0} limit={4} />
-      <Collection />
-      <TabFeatures data={productData} start={0} limit={6} />
-      <Banner />
-      <Benefit props="md:py-20 py-10" />
-      <Testimonial data={testimonialData} limit={6} />
-      <Instagram />
-      <Brand />
-      <Footer />
-      <ModalNewsletter />
-    </>
-  )
+export default function HomeMarketplace() {
+    const [products, setProducts] = useState<ProductType[]>([]);
+
+    const loadProducts = async (): Promise<void> => {
+        try {
+            const responseData: ProductType[] = await fetchProducts();
+            setProducts(responseData);
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        }
+    };
+    useEffect(() => {
+        loadProducts();
+    }, [])
+    return (
+        <>
+            <TopNavOne props=" bg-[#263587] border-b border-surface1" slogan='New customers save 10% with the code GET10' />
+            <div id="header" className='relative w-full'>
+                <MenuMarketplace />
+                <SliderMarketplace />
+            </div>
+            <BannerAbove />
+            <Deal />
+            <Collection />
+            <BestSeller data={products} start={0} limit={5} />
+            <BannerBelow />
+            <TopProduct />
+            <Recommend />
+            <NewsInsight data={blogData} start={18} limit={21} />
+            <Benefit props='md:py-[60px] py-10 border-b border-line' />
+            <Brand />
+            <Footer />
+            <ModalNewsletter />
+        </>
+    )
 }

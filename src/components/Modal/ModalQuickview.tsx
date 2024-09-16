@@ -14,6 +14,7 @@ import { useCompare } from '@/context/CompareContext'
 import { useModalCompareContext } from '@/context/ModalCompareContext'
 import Rate from '../Other/Rate';
 import ModalSizeguide from './ModalSizeguide';
+import { APIHost } from '@/api/api';
 
 const ModalQuickview = () => {
     const [photoIndex, setPhotoIndex] = useState(0)
@@ -116,7 +117,7 @@ const ModalQuickview = () => {
                                 {selectedProduct?.images.map((item, index) => (
                                     <div className="bg-img w-full aspect-[3/4] max-md:w-[150px] max-md:flex-shrink-0 rounded-[20px] overflow-hidden md:mt-6" key={index}>
                                         <Image
-                                            src={item}
+                                            src={APIHost+item}
                                             width={1500}
                                             height={2000}
                                             alt={item}
