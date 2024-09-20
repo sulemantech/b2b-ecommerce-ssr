@@ -28,13 +28,7 @@ const BlogItem: React.FC<BlogProps> = ({ data, type }) => {
                 >
                     <div className="blog-main h-full block">
                         <div className="blog-thumb rounded-[20px] overflow-hidden">
-                            <Image
-                                src={data.thumbImg}
-                                width={2000}
-                                height={1500}
-                                alt='blog-img'
-                                className='w-full duration-500'
-                            />
+                            <img src={data.thumbImg} alt="" className='w-[2000px] h-[250px]' />
                         </div>
                         <div className="blog-infor mt-7">
                             <div className="blog-tag bg-green py-1 px-2.5 rounded-full text-button-uppercase inline-block">{data.tag}</div>

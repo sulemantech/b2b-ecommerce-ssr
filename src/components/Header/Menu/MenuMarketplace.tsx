@@ -169,7 +169,7 @@ const MenuMarketplace = () => {
                                         {categories.length > 0 ? (
                                             categories.map((category) => (
                                                 <Link
-                                                    href={`/shop/category/${category.id}`}
+                                                href={`/shop/${category.name}`}
                                                     key={category.id}
                                                     className="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between"
                                                 >

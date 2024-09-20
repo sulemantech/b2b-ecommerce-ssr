@@ -9,6 +9,7 @@ import Product from '../Product/Product';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css'
 import HandlePagination from '../Other/HandlePagination';
+import { fetchCategories } from '@/api/api';
 
 interface Props {
     data: Array<ProductType>;
@@ -20,6 +21,7 @@ const ShopBreadCrumbImg: React.FC<Props> = ({ data, productPerPage, dataType }) 
     const [layoutCol, setLayoutCol] = useState<number | null>(4)
     const [showOnlySale, setShowOnlySale] = useState(false)
     const [sortOption, setSortOption] = useState('');
+    const [categories, setCategories] = useState<any[]>([]);
     const [openSidebar, setOpenSidebar] = useState(false)
     const [type, setType] = useState<string | null>(dataType)
     const [size, setSize] = useState<string | null>()
@@ -29,6 +31,18 @@ const ShopBreadCrumbImg: React.FC<Props> = ({ data, productPerPage, dataType }) 
     const [currentPage, setCurrentPage] = useState(0);
     const productsPerPage = productPerPage;
     const offset = currentPage * productsPerPage;
+
+    useEffect(() => {
+        const getCategories = async () => {
+            try {
+                const data = await fetchCategories();
+                setCategories(data);
+            } catch (error) {
+                console.error('Failed to fetch categories', error);
+            }
+        };
+        getCategories();
+    }, []);
 
     const handleLayoutCol = (col: number) => {
         setLayoutCol(col)
@@ -81,7 +95,7 @@ const ShopBreadCrumbImg: React.FC<Props> = ({ data, productPerPage, dataType }) 
     let filteredData = data.filter(product => {
         let isShowOnlySaleMatched = true;
         if (showOnlySale) {
-            isShowOnlySaleMatched = product.sale
+            // isShowOnlySaleMatched = product.sale
         }
 
         let isDataTypeMatched = true;
@@ -213,7 +227,7 @@ const ShopBreadCrumbImg: React.FC<Props> = ({ data, productPerPage, dataType }) 
             <div className="breadcrumb-block style-img">
                 <div className="breadcrumb-main bg-linear overflow-hidden">
                     <div className="container lg:pt-[134px] pt-24 pb-10 relative">
-                        <div className="main-content w-full h-full flex flex-col items-center justify-center relative z-[1]">
+                        <div className=" w-full flex flex-col items-center justify-center relative z-[1]">
                             <div className="text-content">
                                 <div className="heading2 text-center">{dataType === null ? 'Shop' : dataType}</div>
                                 <div className="link flex items-center justify-center gap-1 caption1 mt-3">
@@ -223,18 +237,22 @@ const ShopBreadCrumbImg: React.FC<Props> = ({ data, productPerPage, dataType }) 
                                 </div>
                             </div>
                             <div className="list-tab flex flex-wrap items-center justify-center gap-y-5 gap-8 lg:mt-[70px] mt-12 overflow-hidden">
-                                {['t-shirt', 'dress', 'top', 'swimwear', 'shirt'].map((item, index) => (
-                                    <div
-                                        key={index}
-                                        className={`tab-item text-button-uppercase cursor-pointer has-line-before line-2px ${dataType === item ? 'active' : ''}`}
-                                        onClick={() => handleType(item)}
-                                    >
-                                        {item}
-                                    </div>
-                                ))}
+                                {Array.from(new Set(categories.map(category => category.name))) // Remove duplicates
+                                    .slice(0, 5) // Limit to the first 5 unique categories
+                                    .map((categoryName, index) => (
+                                        <div
+                                            key={index} // Provide a unique key
+                                            className={`tab-item text-button-uppercase cursor-pointer has-line-before line-2px ${dataType === categoryName ? 'active' : ''
+                                                }`}
+                                            onClick={() => handleType(categoryName)}
+                                        >
+                                            {categoryName}
+                                        </div>
+                                    ))}
                             </div>
+
                         </div>
-                        <div className="bg-img absolute top-2 -right-6 max-lg:bottom-0 max-lg:top-auto w-1/3 max-lg:w-[26%] z-[0] max-sm:w-[45%]">
+                        {/* <div className="bg-img absolute top-2 -right-6 max-lg:bottom-0 max-lg:top-auto w-1/3 max-lg:w-[26%] z-[0] max-sm:w-[45%]">
                             <Image
                                 src={'/images/slider/bg1-1.png'}
                                 width={1000}
@@ -242,7 +260,7 @@ const ShopBreadCrumbImg: React.FC<Props> = ({ data, productPerPage, dataType }) 
                                 alt=''
                                 className=''
                             />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

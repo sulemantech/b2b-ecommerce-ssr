@@ -157,10 +157,10 @@ const Product: React.FC<ProductProps> = ({ data, type }) => {
                                 ) : (
                                     <>
                                         {
-                                            data.thumbImage.map((img, index) => (
+                                            data.images.map((img, index) => (
                                                 <Image
                                                     key={index}
-                                                    src={img}
+                                                    src={APIHost+img}
                                                     width={500}
                                                     height={500}
                                                     priority={true}
@@ -364,10 +364,10 @@ const Product: React.FC<ProductProps> = ({ data, type }) => {
                                             </div>
                                         )}
                                         <div className="product-img w-full aspect-[3/4] rounded-2xl overflow-hidden">
-                                            {data.thumbImage.map((img, index) => (
+                                            {data.images.map((img, index) => (
                                                 <Image
                                                     key={index}
-                                                    src={img}
+                                                    src={APIHost+img}
                                                     width={500}
                                                     height={500}
                                                     priority={true}

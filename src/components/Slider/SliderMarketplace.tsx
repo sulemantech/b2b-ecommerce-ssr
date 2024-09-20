@@ -61,7 +61,7 @@ const SliderMarketplace = () => {
                     >
                         <div className="text-content md:pl-16 pl-5 basis-1/2 relative z-[1]">
                             <div className="text-sub-display">{currentSlide.subHeading}</div>
-                            <div className="heading2 md:mt-5 mt-2">{currentSlide.heading}</div>
+                            <div className="heading2 w-[80%] md:mt-5 mt-2">{currentSlide.heading}</div>
                             <a
                                 href={currentSlide.link}
                                 className="button-main bg-black text-white hover:bg-green md:mt-8 mt-3"
